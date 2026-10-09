@@ -4,28 +4,24 @@ import "fmt"
 
 func main() {
 
-	usd_eur, usd_rub := getUserInput()
-	calculateResult(usd_eur, usd_rub)
+	var USD string = "USD"
+	var RUB string = "RUB"
+
+	Value := getUserInput()
+	calculateResult(Value, USD, RUB)
 
 }
 
-func getUserInput() (float64, float64) {
+func getUserInput() float64 {
 
-	var usd_eur float64
-	var usd_rub float64
+	var value float64
 
-	fmt.Print("Введите стоимость одного доллара в евро: ")
-	fmt.Scan(&usd_eur)
+	fmt.Print("Введите число: ")
+	fmt.Scan(&value)
 
-	fmt.Print("Введите стоимость одного доллара в рублях: ")
-	fmt.Scan(&usd_rub)
-
-	return usd_eur, usd_eur
+	return value
 }
 
-func calculateResult(usd_eur, usd_rub float64) {
+func calculateResult(Value float64, USD, RUB string) {
 
-	eur_rub := usd_rub / usd_eur
-
-	fmt.Println("Константа конвертации EUR-RUB", eur_rub)
 }
