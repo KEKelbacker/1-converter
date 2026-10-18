@@ -63,7 +63,7 @@ func checktotal(total float64) bool {
 func calculateResult(total float64, mainValue, newValue string) float64 {
 
 	course := setCourse(mainValue, newValue)
-	return total / course
+	return total * course
 }
 
 func setCourse(mainValue, newValue string) (course float64) {
