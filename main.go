@@ -69,37 +69,21 @@ func calculateResult(total float64, mainValue, newValue string) float64 {
 func setCourse(mainValue, newValue string) (course float64) {
 
 	switch {
-
 	case mainValue == "USD" && newValue == "RUB":
-
-		course = 0.78
-
-	case mainValue == "USD" && newValue == "EUR":
-
-		course = 5.30
-
-	case mainValue == "EUR" && newValue == "RUB":
-
-		course = 0.98
-
-	case mainValue == "EUR" && newValue == "USD":
-
-		course = 0.058
-
-	case mainValue == "RUB" && newValue == "USD":
-
 		course = 78.20
-
-	case mainValue == "RUB" && newValue == "USD":
-
+	case mainValue == "EUR" && newValue == "RUB":
 		course = 98.77
-
+	case mainValue == "RUB" && newValue == "USD":
+		course = 1 / 78.20 // ≈ 0.01279
+	case mainValue == "RUB" && newValue == "EUR":
+		course = 1 / 98.77 // ≈ 0.01012
+	case mainValue == "USD" && newValue == "EUR":
+		course = 78.20 / 98.77 // ≈ 0.7917
+	case mainValue == "EUR" && newValue == "USD":
+		course = 98.77 / 78.20 // ≈ 1.2631
 	default:
-
-		course = 1
-
+		course = 1 // одинаковые валюты
 	}
-
 	return course
 
 }
