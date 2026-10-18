@@ -1,94 +1,105 @@
 package main
 
-import (
-	"errors"
-	"fmt"
-)
+import "fmt"
 
 func main() {
 
-	defer func() {
-
-		r := recover()
-		if r != nil {
-			fmt.Println("Ошибка", r)
-		}
-
-	}()
-
-	Value := getUserInput()
-	course, err := checkValue(Value)
-
-	if err != nil {
-		panic("Неверно указана валюта")
-	}
-
+	mainValue := getUserInput()
 	total := getTotal()
+	newValue := getUserInput()
 
-	result := calculateResult(total, course)
+	result := calculateResult(total, mainValue, newValue)
 
-	fmt.Println("Сумма в выбранной валюте:", result)
+	fmt.Println("Итоговая сумма:", result)
 
 }
 
 func getUserInput() string {
 
 	var value string
+	for {
 
-	fmt.Print("Введите валюту (USD, EUR, RUB): ")
-	fmt.Scan(&value)
+		fmt.Print("Введите валюту (USD, EUR, RUB): ")
+		fmt.Scan(&value)
+
+		if checkValue(value) {
+			break
+		}
+	}
 
 	return value
+
+}
+
+func checkValue(value string) bool {
+
+	return value == "USD" || value == "EUR" || value == "RUB"
+
 }
 
 func getTotal() float64 {
 
 	var total float64
+	for {
 
-	fmt.Print("Введите сумму в рублях: ")
-	fmt.Scan(&total)
+		fmt.Print("Введите сумму: ")
+		fmt.Scan(&total)
+
+		if checktotal(total) {
+			break
+		}
+	}
 
 	return total
 
 }
 
-func checkValue(value string) (float64, error) {
+func checktotal(total float64) bool {
 
-	var course float64
+	return total > 0
+
+}
+
+func calculateResult(total float64, mainValue, newValue string) float64 {
+
+	course := setCourse(mainValue, newValue)
+	return total / course
+}
+
+func setCourse(mainValue, newValue string) (course float64) {
 
 	switch {
 
-	case value == "USD":
+	case mainValue == "USD" && newValue == "RUB":
 
-		course = 68.90
+		course = 0.78
 
-	case value == "EUR":
+	case mainValue == "USD" && newValue == "EUR":
 
-		course = 90.70
+		course = 5.30
 
-	case value == "RUB":
+	case mainValue == "EUR" && newValue == "RUB":
 
-		course = 1
+		course = 0.98
+
+	case mainValue == "EUR" && newValue == "USD":
+
+		course = 0.058
+
+	case mainValue == "RUB" && newValue == "USD":
+
+		course = 78.20
+
+	case mainValue == "RUB" && newValue == "USD":
+
+		course = 98.77
 
 	default:
 
-		course = 0
+		course = 1
 
 	}
 
-	if course == 0 {
+	return course
 
-		return 0, errors.New("NO_PARAMS_ERROR")
-
-	} else {
-
-		return course, nil
-	}
-}
-
-func calculateResult(total, course float64) float64 {
-
-	result := total / course
-
-	return result
 }
